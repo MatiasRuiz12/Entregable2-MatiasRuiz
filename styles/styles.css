@@ -1,0 +1,41 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    background: linear-gradient(45deg, #bb978f, #ebebeb);
+}
+img{
+    width: 240pv;
+    height: 250px;
+}
+header{
+    padding: 20px;
+    margin: 20px;
+    background-color: rgb(136, 85, 85);
+    text-align: center;
+}
+
+div{
+    padding: 50px;
+    margin: 20px;
+}
+
+.rubros {
+    display: flex;
+    justify-content: space-around; 
+    gap: 10px; 
+}
+
+.rubros div {
+    margin: 0;
+}
+
+.rubros button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+#contenedorProductos {
+    margin-top: 20px; 
+    display: flex;
+    justify-content: space-around; 
+    gap: 10px; 
+}
