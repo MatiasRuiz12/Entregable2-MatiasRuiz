@@ -1,6 +1,41 @@
-document.getElementById("botoncerrar").addEventListener("click", () => {
-  minimizarRubros();
+document.getElementById("finalizarCompra").addEventListener("click", () => {
+  finalizarCompra();
 });
+
+async function finalizarCompra() {
+  try {
+    if (carrito.length > 0) {
+      const response = await fetch('https://api.ejemplo.com/finalizarCompra', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ carrito: carrito })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error en la finalización de la compra');
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+       
+        localStorage.removeItem('carrito');
+        document.getElementById("Carrito").innerText = `Total del carrito: $0`;
+        document.getElementById("mensajeFinalizacion").innerText = "¡Compra finalizada con éxito! Gracias por tu compra.";
+        carrito.length = 0; 
+      } else {
+        throw new Error(data.message || 'Error en la finalización de la compra');
+      }
+    } else {
+      document.getElementById("mensajeFinalizacion").innerText = "El carrito está vacío. Agrega productos antes de finalizar la compra.";
+    }
+  } catch (error) {
+    document.getElementById("mensajeFinalizacion").innerText = `Ocurrió un error: ${error.message}`;
+  }
+}
+
 function minimizarRubros() {
   const contenedor = document.getElementById("contenedorProductos");
   contenedor.innerHTML = '';
@@ -8,7 +43,6 @@ function minimizarRubros() {
   document.getElementById("cocina").disabled = false;
   document.getElementById("baño").disabled = false;
 }
-
 
 const productosBazar = [
   { nombre: "Black Mate", precio: 6500, imagen: "./media/bazar/blackmate.png" },
@@ -63,7 +97,6 @@ function imprimirProductosEnHTML(productos) {
   });
 }
 
-
 document.getElementById("btnborrar").addEventListener("click", () => {
   vaciarCarrito();
 });
@@ -71,7 +104,6 @@ document.getElementById("btnborrar").addEventListener("click", () => {
 function vaciarCarrito() {
   carrito.length = 0; 
   actualizarTotalCarrito(); 
-  
 }
 
 const carrito = [];
@@ -86,6 +118,3 @@ function actualizarTotalCarrito() {
   let total = carrito.reduce((acc, producto) => acc + producto.precio, 0);
   document.getElementById("Carrito").innerText = `Total del carrito: $${total}`;
 }
-
-
-
