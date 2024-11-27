@@ -13,18 +13,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("bazar").addEventListener("click", () => {
         imprimirProductosEnHTML(productosBazar);
-        document.getElementById("bazar").disabled = true;
       });
 
       document.getElementById("cocina").addEventListener("click", () => {
         imprimirProductosEnHTML(productosCocina);
-        document.getElementById("cocina").disabled = true;
       });
 
       document.getElementById("baño").addEventListener("click", () => {
         imprimirProductosEnHTML(productosBaño);
-        document.getElementById("baño").disabled = true;
       });
+
+      cargarCarritoDesdeLocalStorage();
     })
     .catch(error => {
       console.error('Error al cargar los productos:', error);
@@ -54,20 +53,54 @@ document.getElementById("btnborrar").addEventListener("click", () => {
 
 function vaciarCarrito() {
   carrito.length = 0;
+  localStorage.removeItem('carrito');
   actualizarTotalCarrito();
+  mostrarCarrito();
 }
 
-const carrito = [];
+let carrito = [];
 
 function agregarAlCarrito(producto) {
   carrito.push(producto);
   localStorage.setItem('carrito', JSON.stringify(carrito));
   actualizarTotalCarrito();
+  mostrarCarrito();
 }
 
 function actualizarTotalCarrito() {
   let total = carrito.reduce((acc, producto) => acc + producto.precio, 0);
   document.getElementById("Carrito").innerText = `Total del carrito: $${total}`;
+}
+
+function mostrarCarrito() {
+  const contenedorCarrito = document.getElementById("carritoCompras");
+  contenedorCarrito.innerHTML = '<h1>Este es tu carrito</h1>'; 
+  carrito.forEach((producto, index) => {
+    const itemCarrito = document.createElement("div");
+    itemCarrito.innerHTML = `
+    <img src="${producto.imagen}">
+      <p>${producto.nombre} - Precio: $${producto.precio}</p>
+      <button id="eliminar${index}">Eliminar</button>
+    `;
+    contenedorCarrito.appendChild(itemCarrito);
+    document.getElementById(`eliminar${index}`).addEventListener("click", () => eliminarProducto(index));
+  });
+}
+
+function eliminarProducto(index) {
+  carrito.splice(index, 1);
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+  actualizarTotalCarrito();
+  mostrarCarrito();
+}
+
+function cargarCarritoDesdeLocalStorage() {
+  const carritoGuardado = localStorage.getItem('carrito');
+  if (carritoGuardado) {
+    carrito = JSON.parse(carritoGuardado);
+    actualizarTotalCarrito();
+    mostrarCarrito();
+  }
 }
 
 document.getElementById("finalizarCompra").addEventListener("click", () => {
@@ -97,6 +130,7 @@ async function finalizarCompra() {
         });
 
         carrito.length = 0; 
+        mostrarCarrito(); 
       } else {
         throw new Error(data.message || 'Error en la finalización de la compra');
       }
@@ -106,4 +140,9 @@ async function finalizarCompra() {
   } catch (error) {
     document.getElementById("mensajeFinalizacion").innerText = `Ocurrió un error: ${error.message}`;
   }
+}
+
+function minimizarRubros() {
+  const contenedor = document.getElementById("contenedorProductos");
+  contenedor.innerHTML = '';
 }
