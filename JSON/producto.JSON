@@ -1,0 +1,21 @@
+{
+    "productosBazar": [
+      { "nombre": "Black Mate", "precio": 6500, "imagen": "./media/bazar/blackmate.png" },
+      { "nombre": "Tetera difusora", "precio": 4500, "imagen": "./media/bazar/tetera.png" },
+      { "nombre": "Vaso termico", "precio": 2500, "imagen": "./media/bazar/vaso.png" },
+      { "nombre": "Taza doble fondo", "precio": 3000, "imagen": "./media/bazar/tazadoble.png" }
+    ],
+    "productosCocina": [
+      { "nombre": "Especieros", "precio": 1700, "imagen": "./media/cocina/especiero.png" },
+      { "nombre": "Cubiertos", "precio": 2200, "imagen": "./media/cocina/cubiertos.png" },
+      { "nombre": "Cacerola", "precio": 9800, "imagen": "./media/cocina/cacerola.png" },
+      { "nombre": "Fuente", "precio": 7000, "imagen": "./media/cocina/fuente.png" }
+    ],
+    "productosBaño": [
+      { "nombre": "Set plastico", "precio": 9800, "imagen": "./media/baño/setplastico.png" },
+      { "nombre": "Dispenser jabon", "precio": 5000, "imagen": "./media/baño/dispenser.png" },
+      { "nombre": "Tacho", "precio": 15800, "imagen": "./media/baño/tacho.png" },
+      { "nombre": "Cepillo", "precio": 6700, "imagen": "./media/baño/cepillo.png" }
+    ]
+  }
+  
